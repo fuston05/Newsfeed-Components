@@ -85,6 +85,22 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
+    title: 'Testing My "createComponent()" Function in 2019',
+    date: 'Dec 10th, 2019',
+    firstParagraph: `Hodor hodor HODOR! Hodor hodor - hodor, hodor. Hodor hodor... Hodor hodor hodor; hodor hodor. Hodor hodor hodor, hodor, hodor
+          hodor. Hodor, hodor. Hodor. Hodor, hodor - hodor... Hodor hodor hodor; hodor HODOR hodor, hodor hodor?! Hodor hodor, hodor.
+          Hodor hodor hodor hodor hodor! Hodor hodor - HODOR hodor, hodor hodor hodor hodor hodor; hodor hodor? `,
+
+    secondParagraph: `Hodor, hodor. Hodor. Hodor, hodor, hodor. Hodor hodor, hodor. Hodor hodor, hodor, hodor hodor. Hodor! Hodor hodor, hodor;
+          hodor hodor hodor? Hodor, hodor. Hodor. Hodor, hodor - HODOR hodor, hodor hodor hodor! Hodor, hodor. Hodor. Hodor, HODOR
+          hodor, hodor hodor, hodor, hodor hodor. Hodor hodor - hodor - hodor... Hodor hodor hodor hodor hodor hodor hodor?! Hodor
+          hodor - hodor hodor hodor. Hodor. Hodor hodor... Hodor hodor hodor hodor hodor? `,
+
+    thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
+          Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
+          Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
   }
 ];
 
@@ -117,26 +133,18 @@ const data = [
 function createComponent(infoOb){
   
     //create elements
-    const article= document.createElement('div');
-    const title= document.createElement('h2');
-    const date= document.createElement('p');
-    const para1= document.createElement('p');
-    const para2= document.createElement('p');
-    const para3= document.createElement('p');
-    const expandButton= document.createElement('span');
+    let article= document.createElement('div');
+    let title= document.createElement('h2');
+    let date= document.createElement('p');
+    let para1= document.createElement('p');
+    let para2= document.createElement('p');
+    let para3= document.createElement('p');
+    let expandButton= document.createElement('span');
 
     //add classes
     article.classList.add('article');
     date.classList.add('date');
     expandButton.classList.add('expandButton');
-
-    // add data from object
-    title.textContent= infoOb.title;
-    date.textContent= infoOb.date;
-    para1.textContent= infoOb.firstParagraph;
-    para2.textContent= infoOb.secondParagraph;
-    para3.textContent= infoOb.thirdParagraph;
-    expandButton.textContent= 'button';
 
     //append structure
     article.appendChild(title);
@@ -155,8 +163,39 @@ function createComponent(infoOb){
 
 }//end func
 
-//grab parent element from DOM
-const articles= document.querySelector('.articles');
 
-articles.appendChild(createComponent(data));
-// createComponent(data);
+data.forEach( ele => {
+  //create component
+  let component= createComponent(data);
+
+  //get and assign title info
+  let componentTitle= component.querySelector('h2');
+  componentTitle.textContent= ele.title;
+
+  // get and assign date info
+  let componentDate= component.querySelector('p.date');
+  componentDate.textContent= ele.date;
+
+  // get and assign para1 info
+  let componentPara1= component.querySelector('p:nth-child(3)');
+  componentPara1.textContent= ele.firstParagraph;
+
+  // get and assign Para2 info
+  let componentPara2= component.querySelector('p:nth-child(4)');
+  componentPara2.textContent= ele.secondParagraph;
+
+  // get and assign Para3 info
+  let componentPara3= component.querySelector('p:nth-child(5)');
+  componentPara3.textContent= ele.thirdParagraph;
+
+  //assign text to button
+  let componentButton= component.querySelector('.expandButton');
+  componentButton.textContent= 'Button';
+  
+  //get parent element from DOM
+  let articles= document.querySelector('.articles');
+
+  articles.appendChild(component);
+
+
+} );//end foreach
