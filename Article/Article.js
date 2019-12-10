@@ -112,3 +112,51 @@ const data = [
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
 
 */
+
+
+function createComponent(infoOb){
+  
+    //create elements
+    const article= document.createElement('div');
+    const title= document.createElement('h2');
+    const date= document.createElement('p');
+    const para1= document.createElement('p');
+    const para2= document.createElement('p');
+    const para3= document.createElement('p');
+    const expandButton= document.createElement('span');
+
+    //add classes
+    article.classList.add('article');
+    date.classList.add('date');
+    expandButton.classList.add('expandButton');
+
+    // add data from object
+    title.textContent= infoOb.title;
+    date.textContent= infoOb.date;
+    para1.textContent= infoOb.firstParagraph;
+    para2.textContent= infoOb.secondParagraph;
+    para3.textContent= infoOb.thirdParagraph;
+    expandButton.textContent= 'button';
+
+    //append structure
+    article.appendChild(title);
+    article.appendChild(date);
+    article.appendChild(para1);
+    article.appendChild(para2);
+    article.appendChild(para3);
+    article.appendChild(expandButton);
+
+    //add eventListeners
+    expandButton.addEventListener('click', (event) => {
+      article.classList.toggle('article-open');
+    });//end event
+
+    return article;
+
+}//end func
+
+//grab parent element from DOM
+const articles= document.querySelector('.articles');
+
+articles.appendChild(createComponent(data));
+// createComponent(data);
