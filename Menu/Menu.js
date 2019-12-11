@@ -57,31 +57,55 @@ function createMenu(array){
 
   // click event
   menuButton.addEventListener('click', (event) => {
+    event.stopPropagation;
     menu.classList.toggle('menu--open'); //toggle class
+    const menuList= document.querySelector('.menu ul');
+
+    //if menu is currently closed then we can open it
     if( menu.classList.contains('menu--open') ){
       //gsap stretch
-      gsap.to( menu,{ duration: 1, width: '350px' } );
-
+      gsap.to( menu,{ duration: 1, width: '350px', onComplete: closeEvent} );
+      gsap.to( menuList,{ duration: 1, opacity: '1'} );
+      
     }//end if
   });//end event
 
   //body click event to close the menu
-  const except= document.querySelector('body');
-  except.addEventListener('click', (event) => {
-    if( event.target != menu && menu.classList.contains('menu--open')){
-      
+  function closeEvent(){
+
+    const except= document.querySelector('body');
+    const menuList= document.querySelector('.menu ul');
+    const listItem= document.querySelector('li');
+
+    except.addEventListener('click', function e(event){
+
+      //if menu is currently open then we can close it
+    if( event.target !== menu &&  //if we click on anything BESIDES the menu/menu items it will close
+      event.target !== listItem && 
+      event.target !== menuList &&
+      menu.classList.contains('menu--open')){
       //gsap stretch
-      gsap.to( menu,{ duration: 1, width: '0px' } );
+      gsap.to( menu,{ duration: 1, width: '0px', onComplete: classToggle } );
+      gsap.to( menuList,{ duration: 0.5, opacity: 0} );
+
+      function classToggle(){
+        menu.classList.toggle('menu--open'); //toggle class
+      }//end fun
+
+      //remove event listener or the menu will not a second time
+      except.removeEventListener('click', e);
+    
     }//end if
   });//end event
-
+  }//end closeEvent
+  
   return menu;
 }//end func
 
 //grab header div
 const header= document.querySelector('.header');
 
-  // add to DOM
+// add to DOM
 header.prepend(createMenu(menuItems));
 
 
