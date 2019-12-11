@@ -42,32 +42,47 @@ function createMenu(array){
   menu.classList.add('menu'); //add menu class
   const unorderedList= document.createElement('ul');//create UL
   
+  //append ul to div.menu
+  menu.appendChild(unorderedList);
 
   //add data in li's and append to ul
   array.forEach( ele => {
-    let curListItem= document.createElement('li');
-    curListItem.textContent= ele;
-    unorderedList.appendChild(curListItem);
+    let curListItem= document.createElement('li');//create li elements
+    curListItem.textContent= ele; //assign textContent from array
+    unorderedList.appendChild(curListItem); //add li to ul
   } );//end foreach
 
-  //append ul to div
-  menu.appendChild(unorderedList);
-
+  //grab the menu button element
   const menuButton= document.querySelector('.menu-button');
-  const header= document.querySelector('.header');
 
+  // click event
   menuButton.addEventListener('click', (event) => {
-    
-    menu.classList.toggle('menu--open');
+    menu.classList.toggle('menu--open'); //toggle class
+    if( menu.classList.contains('menu--open') ){
+      //gsap stretch
+      gsap.to( menu,{ duration: 1, width: '350px' } );
 
+    }//end if
+  });//end event
+
+  //body click event to close the menu
+  const except= document.querySelector('body');
+  except.addEventListener('click', (event) => {
+    if( event.target != menu && menu.classList.contains('menu--open')){
+      
+      //gsap stretch
+      gsap.to( menu,{ duration: 1, width: '0px' } );
+    }//end if
   });//end event
 
   return menu;
 }//end func
 
-
-const menuButton= document.querySelector('.menu-button');
+//grab header div
 const header= document.querySelector('.header');
 
+  // add to DOM
 header.prepend(createMenu(menuItems));
+
+
 
