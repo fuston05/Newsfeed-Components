@@ -85,6 +85,22 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
+    title: 'Testing My "createComponent()" Function in 2019',
+    date: 'Dec 10th, 2019',
+    firstParagraph: `Hodor hodor HODOR! Hodor hodor - hodor, hodor. Hodor hodor... Hodor hodor hodor; hodor hodor. Hodor hodor hodor, hodor, hodor
+          hodor. Hodor, hodor. Hodor. Hodor, hodor - hodor... Hodor hodor hodor; hodor HODOR hodor, hodor hodor?! Hodor hodor, hodor.
+          Hodor hodor hodor hodor hodor! Hodor hodor - HODOR hodor, hodor hodor hodor hodor hodor; hodor hodor? `,
+
+    secondParagraph: `Hodor, hodor. Hodor. Hodor, hodor, hodor. Hodor hodor, hodor. Hodor hodor, hodor, hodor hodor. Hodor! Hodor hodor, hodor;
+          hodor hodor hodor? Hodor, hodor. Hodor. Hodor, hodor - HODOR hodor, hodor hodor hodor! Hodor, hodor. Hodor. Hodor, HODOR
+          hodor, hodor hodor, hodor, hodor hodor. Hodor hodor - hodor - hodor... Hodor hodor hodor hodor hodor hodor hodor?! Hodor
+          hodor - hodor hodor hodor. Hodor. Hodor hodor... Hodor hodor hodor hodor hodor? `,
+
+    thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
+          Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
+          Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
   }
 ];
 
@@ -112,3 +128,74 @@ const data = [
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
 
 */
+
+
+function createComponent(infoOb){
+  
+    //create elements
+    let article= document.createElement('div');
+    let title= document.createElement('h2');
+    let date= document.createElement('p');
+    let para1= document.createElement('p');
+    let para2= document.createElement('p');
+    let para3= document.createElement('p');
+    let expandButton= document.createElement('span');
+
+    //add classes
+    article.classList.add('article');
+    date.classList.add('date');
+    expandButton.classList.add('expandButton');
+
+    //append structure
+    article.appendChild(title);
+    article.appendChild(date);
+    article.appendChild(para1);
+    article.appendChild(para2);
+    article.appendChild(para3);
+    article.appendChild(expandButton);
+
+    //add eventListeners
+    expandButton.addEventListener('click', (event) => {
+      article.classList.toggle('article-open');
+    });//end event
+
+    return article;
+
+}//end func
+
+
+data.forEach( ele => {
+  //create component
+  let component= createComponent(data);
+
+  //get and assign title info
+  let componentTitle= component.querySelector('h2');
+  componentTitle.textContent= ele.title;
+
+  // get and assign date info
+  let componentDate= component.querySelector('p.date');
+  componentDate.textContent= ele.date;
+
+  // get and assign para1 info
+  let componentPara1= component.querySelector('p:nth-child(3)');
+  componentPara1.textContent= ele.firstParagraph;
+
+  // get and assign Para2 info
+  let componentPara2= component.querySelector('p:nth-child(4)');
+  componentPara2.textContent= ele.secondParagraph;
+
+  // get and assign Para3 info
+  let componentPara3= component.querySelector('p:nth-child(5)');
+  componentPara3.textContent= ele.thirdParagraph;
+
+  //assign text to button
+  let componentButton= component.querySelector('.expandButton');
+  componentButton.textContent= 'Button';
+  
+  //get parent element from DOM
+  let articles= document.querySelector('.articles');
+
+  articles.appendChild(component);
+
+
+} );//end foreach
